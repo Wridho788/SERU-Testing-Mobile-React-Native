@@ -1,19 +1,14 @@
-import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import RegisterClaimScreen from './screens/RegisterClaim/RegisterClaim';
+import React from 'react';
+import { Provider } from 'react-redux';
+import store from './src/redux/store';
+import AppNavigator from './src/navigation/AppNavigation';
 
-const Stack = createNativeStackNavigator();
-
-export default function App() {
+const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="RegisterClaim"
-        screenOptions={{ headerShown: false }}  // Hide the header
-      >
-        <Stack.Screen name="RegisterClaim" component={RegisterClaimScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <AppNavigator />
+    </Provider>
   );
-}
+};
+
+export default App;
