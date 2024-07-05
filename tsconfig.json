@@ -1,0 +1,28 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "target": "esnext",                          // Menentukan target versi JavaScript output, di sini menggunakan ESNext
+    "lib": ["dom", "dom.iterable", "esnext"],    // Menentukan library yang digunakan, termasuk DOM dan ESNext
+    "allowJs": true,                             // Memungkinkan TypeScript untuk mengimpor file JavaScript
+    "skipLibCheck": true,                        // Melewati pengecekan tipe pada file deklarasi library
+    "esModuleInterop": true,                     // Mendukung impor modul ES dengan menambahkan helper '__importStar' dan '__importDefault'
+    "allowSyntheticDefaultImports": true,        // Memungkinkan impor default dari modul yang hanya memiliki ekspor default
+    "strict": true,                              // Mengaktifkan semua pengecekan tipe yang ketat
+    "forceConsistentCasingInFileNames": true,    // Memastikan penggunaan konsisten pada penamaan file
+    "noFallthroughCasesInSwitch": true,          // Mencegah kasus fallthrough pada pernyataan switch
+    "moduleResolution": "node",                  // Menggunakan resolusi modul Node.js
+    "resolveJsonModule": true,                   // Memungkinkan impor modul JSON
+    "isolatedModules": true,                     // Memisahkan setiap file sebagai modul
+    "noEmit": true,                              // Tidak menghasilkan file output
+    "jsx": "react-native",                       // Menentukan penggunaan JSX untuk React Native
+    "incremental": true,                         // Mendukung kompilasi incremental untuk meningkatkan kinerja
+    "strictNullChecks": true,                    // Mengaktifkan pengecekan null secara ketat
+    "noImplicitAny": true,                       // Mencegah tipe implisit any
+    "noUnusedLocals": true,                      // Menandai variabel lokal yang tidak digunakan sebagai error
+    "noUnusedParameters": true,                  // Menandai parameter yang tidak digunakan sebagai error
+    "noImplicitReturns": true,                   // Memastikan semua jalur fungsi memiliki return
+    "noImplicitThis": true                       // Mencegah this yang tidak diinisialisasi
+  },
+  "include": ["**/*.ts", "**/*.tsx"],            // Menentukan file yang akan di-compile
+  "exclude": ["node_modules", "babel.config.js", "metro.config.js", "jest.config.js"]  // Mengecualikan file dan direktori dari proses kompilasi
+}
