@@ -1,21 +1,16 @@
 import React, { useState, useEffect } from "react";
 import {
   View,
-  StyleSheet,
-  Alert,
   FlatList,
   Text,
-  TouchableOpacity,
-  ScrollView 
+  ScrollView,
 } from "react-native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Navbar from "../../components/navbar/Navbar";
 import Card from "../../components/card/Card";
 import CardBanner from "../../components/card/CardBanner";
-import CardDetailBanner from "../../components/card/CardDetailBanner";
 import CardForm from "../../components/card/CardForm";
-import { data, } from "../../Data/data";
-import { dummyData } from "../../Data/dummyData";
+import { data } from "../../Data/data";
 import { styles } from "./styles";
 
 const RegisterClaimScreen: React.FC = () => {
@@ -27,31 +22,32 @@ const RegisterClaimScreen: React.FC = () => {
     setItems((prevItems) => [...prevItems, ...data]);
   };
 
- // Fungsi untuk menyimpan data ke AsyncStorage
- const saveDataToStorage = async (formData: any) => {
-  try {
-    const jsonValue = JSON.stringify(formData);
-    await AsyncStorage.setItem('submittedData', jsonValue);
-    setSubmittedData(formData); // Simpan juga ke state untuk ditampilkan
-  } catch (e) {
-    console.error('Error saving data to AsyncStorage:', e);
-  }
-};
-
-useEffect(() => {
-  const fetchStoredData = async () => {
+  // Fungsi untuk menyimpan data ke AsyncStorage
+  const saveDataToStorage = async (formData: any) => {
     try {
-      const jsonValue = await AsyncStorage.getItem('submittedData');
-      if (jsonValue !== null) {
-        const storedData = JSON.parse(jsonValue);
-        setSubmittedData(storedData);
-      }
+      const jsonValue = JSON.stringify(formData);
+      await AsyncStorage.setItem("submittedData", jsonValue);
+      setSubmittedData(formData); // Simpan juga ke state untuk ditampilkan
     } catch (e) {
-      console.error('Error fetching data from AsyncStorage:', e);
+      console.error("Error saving data to AsyncStorage:", e);
     }
   };
 
-  fetchStoredData()},[])
+  useEffect(() => {
+    const fetchStoredData = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem("submittedData");
+        if (jsonValue !== null) {
+          const storedData = JSON.parse(jsonValue);
+          setSubmittedData(storedData);
+        }
+      } catch (e) {
+        console.error("Error fetching data from AsyncStorage:", e);
+      }
+    };
+
+    fetchStoredData();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -77,12 +73,14 @@ useEffect(() => {
             onEndReached={loadMoreItems}
             onEndReachedThreshold={0.5}
           />
-           <View style={styles.infoButtonContainer}>
+          {/* <View style={styles.infoButtonContainer}>
             <TouchableOpacity
               style={styles.infoButton}
               onPress={() => setShowInfoCard(!showInfoCard)}
             >
-              <Text style={styles.infoButtonText}>Registrasi Klaim: {dummyData.vehicleInfo.noPolisi}</Text>
+              <Text style={styles.infoButtonText}>
+                Registrasi Klaim: {dummyData.vehicleInfo.noPolisi}
+              </Text>
             </TouchableOpacity>
             {showInfoCard && (
               <Card style={styles.infoCard}>
@@ -101,37 +99,67 @@ useEffect(() => {
                   </View>
                   <View style={styles.infoRightColumn}>
                     <Text style={styles.infoTitle}>Props Dummy Data</Text>
-                    <Text style={styles.infoText}>{dummyData.vehicleInfo.noPolisi}</Text>
-                    <Text style={styles.infoText}>{dummyData.vehicleInfo.namaTertanggung}</Text>
-                    <Text style={styles.infoText}>{dummyData.vehicleInfo.noPolis}</Text>
-                    <Text style={styles.infoText}>{dummyData.vehicleInfo.periode}</Text>
-                    <Text style={styles.infoText}>{dummyData.vehicleInfo.nilaiPertanggungan}</Text>
-                    <Text style={styles.infoText}>{dummyData.vehicleInfo.buatanMerk}</Text>
-                    <Text style={styles.infoText}>{dummyData.vehicleInfo.tahunPembuatan}</Text>
-                    <Text style={styles.infoText}>{dummyData.vehicleInfo.noMesin}</Text>
-                    <Text style={styles.infoText}>{dummyData.vehicleInfo.noRangka}</Text>
+                    <Text style={styles.infoText}>
+                      {dummyData.vehicleInfo.noPolisi}
+                    </Text>
+                    <Text style={styles.infoText}>
+                      {dummyData.vehicleInfo.namaTertanggung}
+                    </Text>
+                    <Text style={styles.infoText}>
+                      {dummyData.vehicleInfo.noPolis}
+                    </Text>
+                    <Text style={styles.infoText}>
+                      {dummyData.vehicleInfo.periode}
+                    </Text>
+                    <Text style={styles.infoText}>
+                      {dummyData.vehicleInfo.nilaiPertanggungan}
+                    </Text>
+                    <Text style={styles.infoText}>
+                      {dummyData.vehicleInfo.buatanMerk}
+                    </Text>
+                    <Text style={styles.infoText}>
+                      {dummyData.vehicleInfo.tahunPembuatan}
+                    </Text>
+                    <Text style={styles.infoText}>
+                      {dummyData.vehicleInfo.noMesin}
+                    </Text>
+                    <Text style={styles.infoText}>
+                      {dummyData.vehicleInfo.noRangka}
+                    </Text>
                   </View>
                 </View>
               </Card>
             )}
-          </View>
+          </View> */}
           <Card style={styles.card}>
             <CardForm onSubmit={saveDataToStorage} />
           </Card>
-          {submittedData && (
-          <View style={styles.submittedContainer}>
-            <Text style={styles.label}>Submitted Data:</Text>
-            <Text style={styles.text}>First Name: {submittedData.firstName}</Text>
-            <Text style={styles.text}>Last Name: {submittedData.lastName}</Text>
-            <Text style={styles.text}>Biodata: {submittedData.biodata}</Text>
-            <Text style={styles.text}>Status: {submittedData.status}</Text>
-            <Text style={styles.text}>Date: {submittedData.date ? new Date(submittedData.date).toLocaleString() : '-'}</Text>
-            <Text style={styles.text}>Province: {submittedData.province}</Text>
-            <Text style={styles.text}>City: {submittedData.city}</Text>
-            <Text style={styles.text}>District: {submittedData.district}</Text>
-            <Text style={styles.text}>Sub-District: {submittedData.subDistrict}</Text>
-          </View>
-        )}
+          {submittedData && <Card style={styles.infoCard}>
+            <View style={styles.infoCardContent}>
+              <View style={styles.infoLeftColumn}>
+                <Text style={styles.infoText}>Nama Depan:</Text>
+                <Text style={styles.infoText}>Nama Belakang</Text>
+                <Text style={styles.infoText}>Biodata:</Text>
+                <Text style={styles.infoText}>Status</Text>
+                <Text style={styles.infoText}>Tanggal dan waktu kejadian:</Text>
+                <Text style={styles.infoText}>Provinsi:</Text>
+                <Text style={styles.infoText}>Kota:</Text>
+                <Text style={styles.infoText}>Kecamatan:</Text>
+                <Text style={styles.infoText}>Kelurahan:</Text>
+              </View>
+              <View style={styles.infoRightColumn}>
+              <Text style={styles.infoText}>{submittedData.firstName}</Text>
+                <Text style={styles.infoText}>{submittedData.lastName}</Text>
+                <Text style={styles.infoText}>{submittedData.biodata}</Text>
+                <Text style={styles.infoText}>{submittedData.status}</Text>
+                <Text style={styles.infoText}>{submittedData.date ? new Date(submittedData.date).toLocaleString() : '-'}</Text>
+                <Text style={styles.infoText}>{submittedData.province}</Text>
+                <Text style={styles.infoText}>{submittedData.city}</Text>
+                <Text style={styles.infoText}>{submittedData.district}</Text>
+                <Text style={styles.infoText}>{submittedData.subDistrict}</Text>
+              </View>
+            </View>
+            </Card>}
         </View>
       </ScrollView>
     </View>
